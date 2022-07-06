@@ -23,7 +23,12 @@ const SongSchema = new Schema({
   ],
   rating: [
     {
-      score: { type: Number, default: 0 },
+      score: {
+        type: Number,
+        default: 0,
+        max: [5, "Maximum value can be only 5."],
+        min: [0, "Minimum value should be greater than or equal to 0. "],
+      },
       user: {
         type: Schema.Types.ObjectId,
         ref: "User",
@@ -33,6 +38,8 @@ const SongSchema = new Schema({
   avgRating: {
     type: Number,
     default: 0,
+    max: 5,
+    min: 0,
   },
 });
 

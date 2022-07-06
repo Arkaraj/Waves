@@ -5,6 +5,7 @@ const ArtistSchema = new Schema({
     type: String,
     required: true,
     min: 3,
+    unique: true,
   },
   dob: {
     type: Date,
@@ -20,6 +21,12 @@ const ArtistSchema = new Schema({
       default: [],
     },
   ],
+  avgRating: {
+    type: Number,
+    default: 0,
+    max: 5,
+    min: 0,
+  },
 });
 
 export default model("Artist", ArtistSchema);

@@ -4,6 +4,8 @@ import { signToken } from "../helper/jwtHelper";
 
 // Models
 import User from "../models/User";
+import Songs from "../models/Songs";
+import Artist from "../models/Artist";
 
 export default {
   getAllUsers: async (_req, res) => {
@@ -24,10 +26,10 @@ export default {
       if (user) {
         res.status(200).json({ user, success: true });
       } else {
-        return customErrorHandler(res, 400, "No Such User");
+        return customErrorHandler(res, 404, "No Such User");
       }
     } catch (err) {
-      res.status(500).json(err);
+      return customErrorHandler(res, undefined, undefined, err);
     }
   },
 
@@ -89,6 +91,61 @@ export default {
     try {
       res.clearCookie("access_token");
       res.status(200).json({ msg: "Logged out", user: {}, success: true });
+    } catch (err) {
+      return customErrorHandler(res, undefined, undefined, err);
+    }
+  },
+  isAuthenticated: async (req, res) => {
+    return res
+      .status(200)
+      .json({ isAuthenticated: true, user: req.user, success: true });
+  },
+  getHomeScreenData: async (req, res) => {
+    try {
+      let songs = await Songs.find()
+        .sort({ avgRating: -1 })
+        .limit(10)
+        .populate("artists")
+        .exec();
+
+      let artists = await Artist.find().sort({ avgRating: -1 }).limit(10);
+
+      //   let artists = await Artist.aggregate([
+      //     {
+      //       $lookup: {
+      //         from: "Songs",
+      //         localField: "songs",
+      //         foreignField: "_id",
+      //         as: "songs",
+      //       },
+      //     },
+      //     {
+      //       $unwind: "$songs",
+      //     },
+      //     {
+      //       $project: {
+      //         _id: 1,
+      //         name: 1,
+      //         dob: 1,
+      //         "songs.avgRating": 1,
+      //         totalRating: { $sum: "songs.avgRating" },
+      //       },
+      //     },
+      //     {
+      //       $group: {
+      //         _id: "$artist_id",
+      //         totalRating: { $sum: "songs.avgRating" },
+      //       },
+      //     },
+      //     {
+      //       $sort: "totalRating",
+      //     },
+      //     {
+      //       $limit: 10,
+      //     },
+      //   ]);
+
+      res.status(200).json({ success: true, songs, artists });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }

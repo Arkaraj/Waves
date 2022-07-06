@@ -9,7 +9,8 @@ const auth = passport.authenticate("jwt", { session: false });
 import userController from "../controllers/user.controller";
 
 router.get("/", auth, userController.getAllUsers);
-
+router.get("/auth", auth, userController.isAuthenticated);
+router.get("/home", auth, userController.getHomeScreenData);
 router.get("/:id", userController.getSpecificUser);
 router.post("/register", userController.registerUser);
 router.post("/login", userController.loginUser);

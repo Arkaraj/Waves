@@ -1,3 +1,3 @@
 # Waves
 
-Spotify clone app
+Spotify like Webapp with Simple CRUD operations
