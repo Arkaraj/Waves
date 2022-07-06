@@ -14,7 +14,7 @@ export const customErrorHandler = (
   error
 ) => {
   res.status(status || 500).json({
-    msgError: true,
+    success: false,
     message,
     err: error ? error.message : undefined,
   });

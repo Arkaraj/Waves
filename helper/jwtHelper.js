@@ -1,4 +1,5 @@
 import { config } from "../config";
+import JWT from "jsonwebtoken";
 
 /**
  * Generates a jwt token for the user
@@ -7,7 +8,7 @@ import { config } from "../config";
 export const signToken = (id) => {
   return JWT.sign(
     {
-      iss: "Arkaraj", // issued by
+      iss: "https://github.com/Arkaraj",
       sub: id,
     },
     `${config.SECRET}`,

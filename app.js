@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import indexRouter from "./routes/index";
 import dotenv from "dotenv";
 import { config } from "./config";
+import cors from "cors";
 
 const result = dotenv.config();
 if (result.error) {
@@ -14,10 +15,10 @@ if (result.error) {
 const app = express();
 
 const mongoConnectionOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
+  // useNewUrlParser: true,
+  // useUnifiedTopology: true,
+  // useCreateIndex: true,
+  // useFindAndModify: false,
 };
 
 mongoose
@@ -37,6 +38,7 @@ app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(cors({ origin: "*" }));
 
 app.get("/", (req, res) => {
   res.send("Waves API successfully loaded");
@@ -44,7 +46,7 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1", indexRouter);
 
-const port = config.PORT || "8080";
+const port = config.PORT || "8000";
 
 app.listen(port, () => {
   console.log(`Server running at ${port} 🚀`);
