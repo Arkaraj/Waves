@@ -4,7 +4,7 @@ Spotify like Webapp with Simple CRUD operations
 
 ## Tech Stack
 
-- Node JS
+- Node JS (Using ES6 with esm)
 - Express JS
 - MongoDB
 - API Testing - Postman (can test with mocha or chai later on...)
