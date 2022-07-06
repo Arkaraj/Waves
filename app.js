@@ -20,15 +20,18 @@ const mongoConnectionOptions = {
   useFindAndModify: false,
 };
 
-// mongoose
-//   .connect(config.MONGO_URI, mongoConnectionOptions)
-//   .then((conn) => {
-//     // mongoose.set("debug", true);
-//     console.log("Successfully connected to db");
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
+mongoose
+  .connect(config.MONGO_URI, mongoConnectionOptions)
+  .then((conn) => {
+    console.log("Successfully connected to db");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+if (config.NODE_ENV == "development") {
+  mongoose.set("debug", true);
+}
 
 app.use(logger("dev"));
 app.use(express.json());
@@ -44,5 +47,5 @@ app.use("/api/v1", indexRouter);
 const port = config.PORT || "8080";
 
 app.listen(port, () => {
-  console.log(`Server running at ${port}`);
+  console.log(`Server running at ${port} 🚀`);
 });

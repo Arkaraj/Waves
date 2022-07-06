@@ -1,11 +1,10 @@
-const mongoose = require("mongoose");
+import { Schema, model } from "mongoose";
 
-const ArtistSchema = new mongoose.Schema({
+const ArtistSchema = new Schema({
   name: {
     type: String,
     required: true,
     min: 3,
-    max: 12,
   },
   dob: {
     type: Date,
@@ -14,6 +13,13 @@ const ArtistSchema = new mongoose.Schema({
   bio: {
     type: String,
   },
+  songs: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Songs",
+      default: [],
+    },
+  ],
 });
 
-module.exports = mongoose.model("Artist", ArtistSchema);
+export default model("Artist", ArtistSchema);
