@@ -19,6 +19,7 @@ const SongSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "Artist",
       default: [],
+      required: true,
     },
   ],
   rating: [

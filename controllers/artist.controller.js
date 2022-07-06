@@ -1,6 +1,5 @@
 import { customErrorHandler } from "../helper/ErrorHandler";
 // Models
-import Songs from "../models/Songs";
 import Artist from "../models/Artist";
 
 export default {
@@ -10,14 +9,14 @@ export default {
 
       res.status(200).json(artists);
     } catch (err) {
-      res.status(500).json(err);
+      return customErrorHandler(res, undefined, undefined, err);
     }
   },
 
   getSpecificArtist: async (req, res) => {
     try {
       const id = req.params.id;
-      const artist = await Artist.findById(id);
+      const artist = await Artist.findById(id).populate("songs", "name").exec();
 
       if (artist) {
         res.status(200).json({ artist, success: true });
@@ -40,7 +39,7 @@ export default {
         await artist.save();
         return res
           .status(200)
-          .json({ msg: "New User Registered!", success: true, artist });
+          .json({ msg: "New Artist Registered!", success: true, artist });
       }
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
@@ -49,16 +48,19 @@ export default {
   deleteArtist: async (req, res) => {
     try {
       const id = req.params.id;
+      if (!id) {
+        return customErrorHandler(res, 404, "No Id Specified");
+      }
       const artist = await Artist.findById(id);
 
       if (artist) {
         await artist.remove();
         res.status(200).json({ success: true });
       } else {
-        return customErrorHandler(res, 400, "No Such Artist");
+        return customErrorHandler(res, 404, "No Such Artist");
       }
     } catch (err) {
-      res.status(500).json(err);
+      return customErrorHandler(res, undefined, undefined, err);
     }
   },
 };

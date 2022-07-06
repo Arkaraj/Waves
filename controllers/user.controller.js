@@ -14,7 +14,7 @@ export default {
 
       res.status(200).json(user);
     } catch (err) {
-      res.status(500).json(err);
+      return customErrorHandler(res, undefined, undefined, err);
     }
   },
 
@@ -102,13 +102,27 @@ export default {
   },
   getHomeScreenData: async (req, res) => {
     try {
+      // get the ratings as well
+      let userId = req.user._id;
       let songs = await Songs.find()
+        .lean()
         .sort({ avgRating: -1 })
         .limit(10)
-        .populate("artists")
+        .populate("artists", "name")
         .exec();
-
-      let artists = await Artist.find().sort({ avgRating: -1 }).limit(10);
+      songs.map((s) => {
+        s.rating.map((rate) => {
+          if (rate.user.toString() == userId) {
+            // new field
+            s.myscore = rate.score;
+          }
+        });
+      });
+      let artists = await Artist.find()
+        .sort({ avgRating: -1 })
+        .limit(10)
+        .populate("songs", "name _id")
+        .exec();
 
       //   let artists = await Artist.aggregate([
       //     {
