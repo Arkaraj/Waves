@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 import { hash } from "bcrypt";
-import { config } from "../config";
+// import { config } from "../config";
 
 const UserSchema = new Schema({
   username: {
@@ -25,7 +25,7 @@ const UserSchema = new Schema({
 
 UserSchema.pre("save", function (next) {
   if (!this.isModified("password")) return next();
-  hash(this.password, config.BCRYPT_SALTROUNDS, (err, passwordHash) => {
+  hash(this.password, 10, (err, passwordHash) => {
     if (err) return next(err);
     this.password = passwordHash;
     next();

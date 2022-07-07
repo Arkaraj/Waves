@@ -5,11 +5,12 @@ import { addSongToArtists } from "../helper/artistHelper";
 import { uploadCoverImage } from "../helper/songHelper";
 
 export default {
-  getAllSongs: async (_req, res) => {
+  getAllSongs: async (req, res) => {
     try {
-      const songs = await Song.find().sort({ avgRating: -1 });
+      let name = req.query.name ? req.query.name : "";
+      const songs = await Song.find({ name }).sort({ avgRating: -1 }).lean();
 
-      res.status(200).json(songs);
+      res.status(200).json({ songs, success: true });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }
@@ -18,7 +19,10 @@ export default {
   getSpecificSongs: async (req, res) => {
     try {
       const id = req.params.id;
-      const song = await Song.findById(id).populate("artists", "name").exec();
+      const song = await Song.findById(id)
+        .lean()
+        .populate("artists", "name")
+        .exec();
 
       if (song) {
         res.status(200).json({ song, success: true });

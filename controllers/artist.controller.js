@@ -5,7 +5,7 @@ import Artist from "../models/Artist";
 export default {
   getAllArtists: async (_req, res) => {
     try {
-      const artists = await Artist.find().sort({ avgRating: -1 });
+      const artists = await Artist.find().lean().sort({ avgRating: -1 });
 
       res.status(200).json(artists);
     } catch (err) {
@@ -16,7 +16,10 @@ export default {
   getSpecificArtist: async (req, res) => {
     try {
       const id = req.params.id;
-      const artist = await Artist.findById(id).populate("songs", "name").exec();
+      const artist = await Artist.findById(id)
+        .lean()
+        .populate("songs", "name")
+        .exec();
 
       if (artist) {
         res.status(200).json({ artist, success: true });

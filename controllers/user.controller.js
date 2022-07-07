@@ -10,9 +10,9 @@ import Artist from "../models/Artist";
 export default {
   getAllUsers: async (_req, res) => {
     try {
-      const user = await User.find({}, { password: 0 });
+      const user = await User.find({}, { password: 0 }).lean();
 
-      res.status(200).json(user);
+      res.status(200).json({ user, success: true });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }
@@ -44,7 +44,7 @@ export default {
         await newUser.save();
         return res
           .status(200)
-          .json({ msg: "New User Registered!", success: true, newUser });
+          .json({ message: "New User Registered!", success: true, newUser });
       }
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
