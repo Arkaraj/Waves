@@ -23,7 +23,7 @@ const mongoConnectionOptions = {
 
 mongoose
   .connect(config.MONGO_URI, mongoConnectionOptions)
-  .then((conn) => {
+  .then((_conn) => {
     console.log("Successfully connected to db");
   })
   .catch((err) => {
@@ -31,10 +31,10 @@ mongoose
   });
 
 if (config.NODE_ENV == "development") {
+  app.use(logger("dev"));
   mongoose.set("debug", true);
 }
 
-app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -47,6 +47,18 @@ app.get("/", (req, res) => {
 app.use("/api/v1", indexRouter);
 
 const port = config.PORT || "8000";
+
+if (config.NODE_ENV == "production") {
+  app.use(express.static(path.join(__dirname, "/client/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+} else {
+  app.get("/", (req, res) => {
+    res.status(200).json({ msg: "Waves API is Working" });
+  });
+}
 
 app.listen(port, () => {
   console.log(`Server running at ${port} 🚀`);

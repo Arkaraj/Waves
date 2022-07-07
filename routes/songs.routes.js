@@ -13,7 +13,7 @@ router.get("/", auth, songController.getAllSongs);
 router.get("/:id", auth, songController.getSpecificSongs);
 router.post("/create", auth, songController.createNewSong);
 router.post(
-  "/image",
+  "/image/:id",
   auth,
   uploadSingleImage("image"),
   songController.AddSongCoverImage

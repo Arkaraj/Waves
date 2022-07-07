@@ -2,6 +2,7 @@ import { customErrorHandler } from "../helper/ErrorHandler";
 // Models
 import Song from "../models/Songs";
 import { addSongToArtists } from "../helper/artistHelper";
+import { uploadCoverImage } from "../helper/songHelper";
 
 export default {
   getAllSongs: async (_req, res) => {
@@ -43,9 +44,21 @@ export default {
   },
   AddSongCoverImage: async (req, res) => {
     try {
-      return res
-        .status(200)
-        .json({ msg: "Uploaded Cover Successfully!", success: true });
+      if (req.file) {
+        let id = req.params.id;
+        let image = "";
+        image = await uploadCoverImage(req, id);
+        let song = await Song.findById(id);
+        song.coverImage = image;
+        await song.save();
+        return res.status(200).json({
+          msg: "Uploaded Cover Successfully!",
+          success: true,
+          song,
+        });
+      } else {
+        return customErrorHandler(res, 400, "No Image Sent!", err);
+      }
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }
