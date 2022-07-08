@@ -1,13 +1,25 @@
 import { customErrorHandler } from "../helper/ErrorHandler";
+import { config } from "../config";
+
 // Models
 import Artist from "../models/Artist";
 
-export default {
-  getAllArtists: async (_req, res) => {
-    try {
-      const artists = await Artist.find().lean().sort({ avgRating: -1 });
+const ITEMS_PER_PAGE = parseInt(config.ITEMS_PER_PAGE);
 
-      res.status(200).json(artists);
+export default {
+  getAllArtists: async (req, res) => {
+    try {
+      let pageNo = req.query.page ? parseInt(req.query.page) : 1;
+      if (isNaN(pageNo) || pageNo <= 0)
+        return customErrorHandler(res, 400, "Bad request. Invalid page no.");
+      let name = req.query.name ? req.query.name : "";
+      const artists = await Artist.find({ name })
+        .lean()
+        .sort({ avgRating: -1 })
+        .skip((pageNo - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE);
+
+      res.status(200).json({ artists, success: true });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }

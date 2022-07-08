@@ -18,7 +18,12 @@ const Nav = (props) => {
   return (
     <div>
       <h1>Nav</h1>
-      {isAuthenticated ? <button onClick={onLogout}>Logout</button> : null}
+      {isAuthenticated ? (
+        <>
+          <p>Hello {user.username}</p>
+          <button onClick={onLogout}>Logout</button>
+        </>
+      ) : null}
     </div>
   );
 };

@@ -1,14 +1,24 @@
 import { customErrorHandler } from "../helper/ErrorHandler";
 // Models
 import Song from "../models/Songs";
-import { addSongToArtists } from "../helper/artistHelper";
+import { addRatingToArtist, addSongToArtists } from "../helper/artistHelper";
 import { uploadCoverImage } from "../helper/songHelper";
+import { config } from "../config";
+
+const ITEMS_PER_PAGE = parseInt(config.ITEMS_PER_PAGE);
 
 export default {
   getAllSongs: async (req, res) => {
     try {
+      let pageNo = req.query.page ? parseInt(req.query.page) : 1;
+      if (isNaN(pageNo) || pageNo <= 0)
+        return customErrorHandler(res, 400, "Bad request. Invalid page no.");
       let name = req.query.name ? req.query.name : "";
-      const songs = await Song.find({ name }).sort({ avgRating: -1 }).lean();
+      const songs = await Song.find({ name: { $regex: name, $options: "i" } })
+        .sort({ avgRating: -1 })
+        .skip((pageNo - 1) * ITEMS_PER_PAGE)
+        .limit(ITEMS_PER_PAGE)
+        .lean();
 
       res.status(200).json({ songs, success: true });
     } catch (err) {
@@ -108,24 +118,29 @@ export default {
           let avgRating = total / (n + 1);
           song.avgRating = avgRating;
           await song.save();
+          await addRatingToArtist(song.artists, rating.score);
           res
             .status(200)
             .json({ success: true, message: "Successfully Rated!" });
         } else {
-          let oldScore = 0;
-          song.rating.map((r) => {
-            if (r.user.toString() == req.user._id) {
-              oldScore = r.score;
-              r.score = req.body.rating;
-            }
-          });
+          let oldScore = req.body.oldScore || 0;
+          if (!oldScore) {
+            song.rating.map((r) => {
+              if (r.user.toString() == req.user._id) {
+                oldScore = r.score;
+                r.score = req.body.rating;
+              }
+            });
+          }
           let n = song.rating.length,
             total = n * song.avgRating;
+          // req.body.oldScore
           total = total - oldScore + req.body.rating;
           let avgRating = total / n;
           song.avgRating = avgRating;
           console.log(oldScore);
           await song.save();
+          await addRatingToArtist(song.artists, rating.score, false, oldScore);
           res.status(200).json({
             success: true,
             message: "Successfully Updated the Rating",

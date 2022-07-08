@@ -1,4 +1,3 @@
-// let apiUrl = "api/v1"
 // eslint-disable-next-line
 export default {
   register: async (user) => {
