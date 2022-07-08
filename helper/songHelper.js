@@ -49,3 +49,15 @@ export const uploadCoverImage = async (req, song) => {
   }
   return image;
 };
+
+export const deleteCoverImage = async (filePath) => {
+  try {
+    fs.unlink(`${__dirname}/..${filePath}`, function (err) {
+      if (err) throw err;
+      console.log("file deleted successfully");
+    });
+  } catch (err) {
+    // raise alarm
+    throw "Error in Deleting the File";
+  }
+};

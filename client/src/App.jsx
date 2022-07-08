@@ -7,6 +7,8 @@ import PrivateRoutes from "./Hocs/PrivateRoutes";
 import Home from "./Components/Home";
 import Register from "./Components/Register";
 import Footer from "./Components/Footer";
+import CreateArtist from "./Components/CreateArtist";
+import CreateSong from "./Components/CreateSong";
 
 function App() {
   return (
@@ -37,6 +39,22 @@ function App() {
               element={
                 <PrivateRoutes>
                   <Home />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="/test"
+              element={
+                <PrivateRoutes>
+                  <CreateArtist />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="/test2"
+              element={
+                <PrivateRoutes>
+                  <CreateSong />
                 </PrivateRoutes>
               }
             />

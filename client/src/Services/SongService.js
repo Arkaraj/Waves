@@ -21,7 +21,7 @@ export default {
     const data = await res.json();
     return data;
   },
-  addCoverImageToSong: async (fd) => {
+  addCoverImageToSong: async (id, fd) => {
     // fd: form data
     const res = await fetch(`/song/image/${id}`, {
       method: "POST",
@@ -43,7 +43,7 @@ export default {
     const data = await res.json();
     return data;
   },
-  rateSong: async (rate) => {
+  rateSong: async (rate, id) => {
     const res = await fetch(`/song/rating/${id}`, {
       method: "PUT",
       body: JSON.stringify(rate),

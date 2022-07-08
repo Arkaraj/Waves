@@ -1,5 +1,10 @@
 // eslint-disable-next-line
 export default {
+  getAllArtist: async () => {
+    const res = await fetch(`/artist/`);
+    const data = await res.json();
+    return data;
+  },
   getArtist: async (id) => {
     const res = await fetch(`/artist/${id}`);
     const data = await res.json();

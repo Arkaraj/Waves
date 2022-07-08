@@ -2,7 +2,7 @@ import { customErrorHandler } from "../helper/ErrorHandler";
 // Models
 import Song from "../models/Songs";
 import { addRatingToArtist, addSongToArtists } from "../helper/artistHelper";
-import { uploadCoverImage } from "../helper/songHelper";
+import { deleteCoverImage, uploadCoverImage } from "../helper/songHelper";
 import { config } from "../config";
 
 const ITEMS_PER_PAGE = parseInt(config.ITEMS_PER_PAGE);
@@ -13,8 +13,10 @@ export default {
       let pageNo = req.query.page ? parseInt(req.query.page) : 1;
       if (isNaN(pageNo) || pageNo <= 0)
         return customErrorHandler(res, 400, "Bad request. Invalid page no.");
-      let name = req.query.name ? req.query.name : "";
-      const songs = await Song.find({ name: { $regex: name, $options: "i" } })
+      let filter = {};
+      if (req.query.name)
+        filter.name = { $regex: req.query.name, $options: "i" };
+      const songs = await Song.find(filter)
         .sort({ avgRating: -1 })
         .skip((pageNo - 1) * ITEMS_PER_PAGE)
         .limit(ITEMS_PER_PAGE)
@@ -51,7 +53,7 @@ export default {
       await addSongToArtists(artists, song._id);
       return res
         .status(200)
-        .json({ msg: "New Song Registered!", success: true, song });
+        .json({ message: "New Song Registered!", success: true, song });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }
@@ -66,7 +68,7 @@ export default {
         song.coverImage = image;
         await song.save();
         return res.status(200).json({
-          msg: "Uploaded Cover Successfully!",
+          message: "Uploaded Cover Successfully!",
           success: true,
           song,
         });
@@ -87,6 +89,7 @@ export default {
 
       if (song) {
         await song.remove();
+        await deleteCoverImage(song.coverImage);
         res.status(200).json({ success: true });
       } else {
         return customErrorHandler(res, 404, "No Such Song");

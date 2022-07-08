@@ -12,12 +12,12 @@ export default {
       let pageNo = req.query.page ? parseInt(req.query.page) : 1;
       if (isNaN(pageNo) || pageNo <= 0)
         return customErrorHandler(res, 400, "Bad request. Invalid page no.");
-      let name = req.query.name ? req.query.name : "";
-      const artists = await Artist.find({ name })
-        .lean()
-        .sort({ avgRating: -1 })
-        .skip((pageNo - 1) * ITEMS_PER_PAGE)
-        .limit(ITEMS_PER_PAGE);
+      let filter = {};
+      if (req.query.name)
+        filter.name = { $regex: req.query.name, $options: "i" };
+      const artists = await Artist.find(filter).lean().sort({ avgRating: -1 });
+      // .skip((pageNo - 1) * ITEMS_PER_PAGE)
+      // .limit(ITEMS_PER_PAGE);
 
       res.status(200).json({ artists, success: true });
     } catch (err) {
@@ -54,7 +54,7 @@ export default {
         await artist.save();
         return res
           .status(200)
-          .json({ msg: "New Artist Registered!", success: true, artist });
+          .json({ message: "New Artist Registered!", success: true, artist });
       }
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
