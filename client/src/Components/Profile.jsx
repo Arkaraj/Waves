@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 
-const Profile = ({ user }) => {
+const Profile = () => {
+  const { user } = useContext(AuthContext);
   return (
     <div>
       <h1>Hi, {user.username}</h1>

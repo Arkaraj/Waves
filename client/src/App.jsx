@@ -9,6 +9,7 @@ import Register from "./Components/Register";
 import Footer from "./Components/Footer";
 import Artist from "./Components/Artist";
 import Song from "./Components/Song";
+import Profile from "./Components/Profile";
 
 function App() {
   return (
@@ -43,6 +44,14 @@ function App() {
               }
             />
             <Route
+              path="/profile"
+              element={
+                <PrivateRoutes>
+                  <Profile />
+                </PrivateRoutes>
+              }
+            />
+            <Route
               path="/artist/:id"
               exact
               element={
@@ -62,9 +71,9 @@ function App() {
             />
           </Routes>
           <br />
-          <Footer />
         </div>
       </div>
+      <Footer />
     </Router>
   );
 }

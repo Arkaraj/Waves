@@ -25,8 +25,10 @@ const Home = () => {
       <h1>Home</h1>
       {loader ? (
         <div>
-          <AddSongButton />
-          <h2>Top 10 Songs</h2>
+          <div className="songHeading">
+            <h2>Top 10 Songs</h2>
+            <AddSongButton />
+          </div>
           {/* <pre>{JSON.stringify(homeFeed.songs, null, 2)}</pre> */}
           <SongList songs={homeFeed.songs} />
           <hr />

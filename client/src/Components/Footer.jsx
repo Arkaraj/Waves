@@ -1,9 +1,9 @@
 import React from "react";
-import { Container, Grid, Box, Link } from "@mui/material";
+import { Container, Box } from "@mui/material";
 
 const Footer = () => {
   return (
-    <footer position="fixed">
+    <footer>
       <Box
         px={{ xs: 3, sm: 5 }}
         py={{ xs: 5, sm: 5 }}

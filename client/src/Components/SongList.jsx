@@ -36,7 +36,7 @@ export default function SongList({ songs }) {
         <TableHead>
           <TableRow>
             <StyledTableCell>ArtWork</StyledTableCell>
-            <StyledTableCell align="right">Song</StyledTableCell>
+            <StyledTableCell>Song</StyledTableCell>
             <StyledTableCell align="right">Date of Release</StyledTableCell>
             <StyledTableCell align="right">Artists&nbsp;</StyledTableCell>
             <StyledTableCell align="right">Rate&nbsp;</StyledTableCell>
