@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import AuthService from "../Services/AuthService";
 import AddSongButton from "./AddSongButton";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import ArtistList from "./ArtistList";
 
 const Home = () => {
   const [homeFeed, setHomeFeed] = useState({ songs: [], artists: [] });
@@ -22,14 +25,17 @@ const Home = () => {
       {loader ? (
         <div>
           <AddSongButton />
-          <h2>Songs</h2>
+          <h2>Top 10 Songs</h2>
           <pre>{JSON.stringify(homeFeed.songs, null, 2)}</pre>
           <hr />
-          <h2>Artists</h2>
-          <pre>{JSON.stringify(homeFeed.artists, null, 2)}</pre>
+          <h2>Top 10 Artists</h2>
+          {/* <pre>{JSON.stringify(homeFeed.artists, null, 2)}</pre> */}
+          <ArtistList artists={homeFeed.artists} />
         </div>
       ) : (
-        <p className="loading"></p>
+        <Box sx={{ display: "flex" }}>
+          <CircularProgress />
+        </Box>
       )}
     </div>
   );

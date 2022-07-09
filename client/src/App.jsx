@@ -7,8 +7,8 @@ import PrivateRoutes from "./Hocs/PrivateRoutes";
 import Home from "./Components/Home";
 import Register from "./Components/Register";
 import Footer from "./Components/Footer";
-import CreateArtist from "./Components/CreateArtist";
-import CreateSong from "./Components/CreateSong";
+import Artist from "./Components/Artist";
+import Song from "./Components/Song";
 
 function App() {
   return (
@@ -43,18 +43,20 @@ function App() {
               }
             />
             <Route
-              path="/test"
+              path="/artist/:id"
+              exact
               element={
                 <PrivateRoutes>
-                  <CreateArtist />
+                  <Artist />
                 </PrivateRoutes>
               }
             />
             <Route
-              path="/test2"
+              path="/song/:id"
+              exact
               element={
                 <PrivateRoutes>
-                  <CreateSong />
+                  <Song />
                 </PrivateRoutes>
               }
             />

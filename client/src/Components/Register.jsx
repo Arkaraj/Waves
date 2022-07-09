@@ -1,10 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import AuthService from "../Services/AuthService";
 import { useNavigate } from "react-router-dom";
+import Message from "./Message";
 
 const Register = (props) => {
   const [user, setUser] = useState({ email: "", username: "", password: "" });
   const [message, setMessage] = useState(null);
+  const [status, setStatus] = useState("success");
 
   let timerID = useRef(null);
   let navigate = useNavigate();
@@ -24,6 +26,7 @@ const Register = (props) => {
 
     AuthService.register(user).then((data) => {
       setMessage(data.message);
+      setStatus("success");
       if (data.success) {
         setUser({ username: "", password: "", email: "" });
 
@@ -32,6 +35,8 @@ const Register = (props) => {
           navigate("/login");
         }, 1000);
       } else {
+        setMessage(data.message);
+        setStatus("error");
       }
     });
   };
@@ -71,7 +76,7 @@ const Register = (props) => {
       </form>
       {message ? (
         <>
-          <h2>{message}</h2>
+          <Message msg={message} status={status} />
         </>
       ) : null}
     </div>

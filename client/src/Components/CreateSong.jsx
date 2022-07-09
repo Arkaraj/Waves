@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ArtistService from "../Services/ArtistService";
 import SongService from "../Services/SongService";
+import AddArtistButton from "./AddArtistButton";
 import MultipleSelectCheckmarks from "./MultipleSelectCheckmarks";
 
 const CreateSong = () => {
   const [artists, setArtists] = useState([]);
+  const [change, setChange] = useState(false);
   const [song, setSong] = useState({
     name: "",
     dateOfRelease: new Date(),
@@ -37,7 +39,7 @@ const CreateSong = () => {
       } else {
       }
     });
-  }, []);
+  }, [change]);
 
   const handleChange = (e) => {
     setSong({ ...song, [e.target.name]: e.target.value });
@@ -106,6 +108,7 @@ const CreateSong = () => {
           <p>Select a file to show details</p>
         )}
         <br />
+        <AddArtistButton setChange={setChange} />
         Artists:
         <MultipleSelectCheckmarks
           artists={artists}

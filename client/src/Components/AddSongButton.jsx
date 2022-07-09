@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import CloseIcon from "@mui/icons-material/Close";
-import AddArtistButton from "./AddArtistButton";
+import CreateSong from "./CreateSong";
 
 const Transition = forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -53,7 +53,7 @@ const AddSongButton = () => {
             </Button>
           </Toolbar>
         </AppBar>
-        <AddArtistButton />
+        <CreateSong />
       </Dialog>
     </div>
   );

@@ -14,3 +14,7 @@
     transform: rotate(1turn);
   }
 }
+
+.message {
+  text-transform: capitalize;
+}
