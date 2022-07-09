@@ -25,10 +25,7 @@ export default {
     // fd: form data
     const res = await fetch(`/song/image/${id}`, {
       method: "POST",
-      body: JSON.stringify(fd),
-      headers: {
-        "Content-Type": "application/json",
-      },
+      body: fd,
     });
     const data = await res.json();
     return data;

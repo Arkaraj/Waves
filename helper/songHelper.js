@@ -29,8 +29,8 @@ export const uploadCoverImage = async (req, song) => {
       file.buffer,
       (err) => {
         if (err) {
-          console.log(err);
-          return;
+          console.log("Error:", err);
+          throw "Error in creating!";
         }
         console.log(
           path.normalize(

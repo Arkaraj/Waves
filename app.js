@@ -32,10 +32,10 @@ mongoose
 
 if (config.NODE_ENV == "development") {
   app.use(logger("dev"));
-  mongoose.set("debug", true);
+  // mongoose.set("debug", true);
 }
 
-app.use(express.json());
+app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({ origin: "*" }));

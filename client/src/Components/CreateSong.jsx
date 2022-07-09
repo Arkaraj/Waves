@@ -12,6 +12,15 @@ const CreateSong = () => {
   });
   const [artistName, setArtistName] = React.useState([]);
   const [msg, setMsg] = useState("");
+
+  const [selectedFile, setSelectedFile] = useState();
+  const [isFilePicked, setIsFilePicked] = useState(false);
+
+  const changeHandler = (event) => {
+    setSelectedFile(event.target.files[0]);
+    setIsFilePicked(true);
+  };
+
   let art = [];
   const addArtist = () => {
     // let art = [];
@@ -42,7 +51,14 @@ const CreateSong = () => {
     addArtist();
     const data = await SongService.createSong({ ...song, artists: art });
     if (data.success) {
-      setMsg(data);
+      const fd = new FormData();
+      fd.append("image", selectedFile, selectedFile.name);
+      const img = await SongService.addCoverImageToSong(data.song._id, fd);
+      if (img.success) {
+        setMsg(data.message);
+      } else {
+        setMsg(img.message);
+      }
     } else {
       setMsg(data.message);
     }
@@ -67,6 +83,28 @@ const CreateSong = () => {
           onChange={handleDateChange}
           required
         />
+        <br />
+        ArtWork:
+        <input
+          type="file"
+          name="image"
+          onChange={changeHandler}
+          accept="image/png, image/gif, image/jpeg"
+          required
+        />
+        {isFilePicked ? (
+          <div>
+            <p>Filename: {selectedFile.name}</p>
+            <p>Filetype: {selectedFile.type}</p>
+            <p>Size in bytes: {selectedFile.size}</p>
+            <p>
+              lastModifiedDate:{" "}
+              {selectedFile.lastModifiedDate.toLocaleDateString()}
+            </p>
+          </div>
+        ) : (
+          <p>Select a file to show details</p>
+        )}
         <br />
         Artists:
         <MultipleSelectCheckmarks

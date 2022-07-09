@@ -41,4 +41,9 @@ export default {
     if (res.status !== 401) return res.json().then((data) => data);
     else return { isAuthenticated: false, user: {} };
   },
+  getHomeFeed: async () => {
+    const res = await fetch(`/users/home`);
+    const data = await res.json();
+    return data;
+  },
 };
