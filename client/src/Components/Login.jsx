@@ -61,6 +61,9 @@ const Login = (props) => {
           <Message msg={message} status={status} />
         </>
       ) : null}
+      <p>
+        New here? <a href="/register">Register as New User</a>.
+      </p>
     </div>
   );
 };

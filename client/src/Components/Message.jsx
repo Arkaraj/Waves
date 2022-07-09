@@ -8,7 +8,7 @@ const Message = ({ status, msg }) => {
   return (
     <Stack sx={{ width: "100%" }} spacing={2}>
       <Alert severity={status}>
-        <AlertTitle class="message">{status}</AlertTitle>
+        <AlertTitle className="message">{status}</AlertTitle>
         <strong>{msg}</strong>
       </Alert>
     </Stack>

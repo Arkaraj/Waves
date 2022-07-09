@@ -4,6 +4,7 @@ import AddSongButton from "./AddSongButton";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import ArtistList from "./ArtistList";
+import SongList from "./SongList";
 
 const Home = () => {
   const [homeFeed, setHomeFeed] = useState({ songs: [], artists: [] });
@@ -26,10 +27,10 @@ const Home = () => {
         <div>
           <AddSongButton />
           <h2>Top 10 Songs</h2>
-          <pre>{JSON.stringify(homeFeed.songs, null, 2)}</pre>
+          {/* <pre>{JSON.stringify(homeFeed.songs, null, 2)}</pre> */}
+          <SongList songs={homeFeed.songs} />
           <hr />
           <h2>Top 10 Artists</h2>
-          {/* <pre>{JSON.stringify(homeFeed.artists, null, 2)}</pre> */}
           <ArtistList artists={homeFeed.artists} />
         </div>
       ) : (

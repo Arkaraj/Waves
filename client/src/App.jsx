@@ -9,12 +9,14 @@ import Register from "./Components/Register";
 import Footer from "./Components/Footer";
 import Artist from "./Components/Artist";
 import Song from "./Components/Song";
+import TryNav from "./Components/TryNav";
 
 function App() {
   return (
     <Router>
       <div className="App">
         <Nav />
+        <TryNav />
         <div className="main">
           <Routes>
             <Route exact path="/" element={<h1>WAVES</h1>} />
