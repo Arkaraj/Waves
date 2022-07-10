@@ -3,6 +3,7 @@ import { useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import Link from "@mui/material/Link";
 import CardMedia from "@mui/material/CardMedia";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
@@ -14,14 +15,16 @@ export default function SearchSongComponent({ song }) {
   const theme = useTheme();
   let artists = [];
   song.artists.map((artist) => {
-    artists.push(artist);
+    artists.push(artist.name);
   });
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card sx={{ display: "flex", m: 2 }}>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <CardContent sx={{ flex: "1 0 auto" }}>
           <Typography component="div" variant="h5">
-            {song.name}
+            <Typography component="a" variant="h5" href={`/song/${song._id}`}>
+              {song.name}
+            </Typography>
           </Typography>
           <Typography
             variant="subtitle1"

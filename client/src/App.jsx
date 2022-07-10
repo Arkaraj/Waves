@@ -10,6 +10,7 @@ import Footer from "./Components/Footer";
 import Artist from "./Components/Artist";
 import Song from "./Components/Song";
 import Profile from "./Components/Profile";
+import SearchSongs from "./Components/SearchSongs";
 
 function App() {
   return (
@@ -66,6 +67,15 @@ function App() {
               element={
                 <PrivateRoutes>
                   <Song />
+                </PrivateRoutes>
+              }
+            />
+            <Route
+              path="/search/:songName"
+              exact
+              element={
+                <PrivateRoutes>
+                  <SearchSongs />
                 </PrivateRoutes>
               }
             />

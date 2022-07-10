@@ -18,9 +18,8 @@ export default {
         filter.name = { $regex: req.query.name, $options: "i" };
       const songs = await Song.find(filter)
         .sort({ avgRating: -1 })
-        .skip((pageNo - 1) * ITEMS_PER_PAGE)
-        .limit(ITEMS_PER_PAGE)
-        .lean();
+        .populate("artists", "name -_id")
+        .exec();
 
       res.status(200).json({ songs, success: true });
     } catch (err) {

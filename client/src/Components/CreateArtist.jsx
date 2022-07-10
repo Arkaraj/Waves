@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
 import { TextField } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
+import Message from "./Message";
 
 const useStyles = () => {
   const theme = useTheme();
@@ -22,7 +23,8 @@ const useStyles = () => {
 const CreateArtist = ({ open, setOpen, setChange }) => {
   const classes = useStyles();
   const [artist, setArtist] = useState({ name: "", dob: new Date(), bio: "" });
-  const [msg, setMsg] = useState("");
+  const [message, setMessage] = useState(null);
+  const [status, setStatus] = useState("success");
 
   const handleChange = (e) => {
     setArtist({ ...artist, [e.target.name]: e.target.value });
@@ -35,10 +37,12 @@ const CreateArtist = ({ open, setOpen, setChange }) => {
 
     const data = await ArtistService.createArtist(artist);
     if (data.success) {
-      setMsg(data);
+      setMessage(data.message);
       setChange(true);
+      setOpen(false);
     } else {
-      setMsg(data.message);
+      setMessage(data.message);
+      setStatus("error");
     }
   };
 
@@ -104,7 +108,11 @@ const CreateArtist = ({ open, setOpen, setChange }) => {
             Create
           </Button>
         </form>
-        {msg ? <pre>{JSON.stringify(msg, null, 2)}</pre> : null}
+        {message ? (
+          <>
+            <Message msg={message} status={status} />
+          </>
+        ) : null}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
