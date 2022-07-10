@@ -15,18 +15,22 @@ Hosted In: https://wavesmusic.herokuapp.com/
 
 ## What can it Do?
 
+Backend:
+
 - User Authentication with JWT
 - Add Artists
 - Add Songs
 - Cover photo of the Song (with multer)
+- Basic CRUD operations
 
 ## Postman Collections
 
 https://documenter.getpostman.com/view/8802598/UzJJtcDk
 
-#### Notes
+#### Note
 
-Could have Used SQL Database, but no good/cheap sql database hosting server online.
+- Could have Used SQL Database, but no good/cheap sql database hosting server online.
+- Not using GraphQL for hosting resons, and REST APIs have better usecase here.
 
 ## To Run It Locally
 
