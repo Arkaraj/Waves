@@ -47,6 +47,7 @@ export default {
           .json({ message: "New User Registered!", success: true, newUser });
       }
     } catch (err) {
+      console.log(err);
       return customErrorHandler(res, undefined, undefined, err);
     }
   },

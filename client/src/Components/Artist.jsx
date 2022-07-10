@@ -46,6 +46,11 @@ const Artist = () => {
         </Typography>
         <Typography variant="body2">{artist.bio}</Typography>
         <br />
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          Average Rating
+        </Typography>
+        <Typography variant="body2">{artist.avgRating}</Typography>
+        <br />
         <p>Songs:</p>
         <p style={{ display: "none" }}>
           {artist.songs.map((song) => songs.push(song.name))}

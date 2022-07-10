@@ -73,7 +73,11 @@ export default function SongList({ songs }) {
                 )}
               </StyledTableCell>
               <StyledTableCell align="right">
-                <Ratings score={song.rating.length} />
+                <Ratings
+                  score={song.rating.length}
+                  id={song._id}
+                  newRating={true}
+                />
               </StyledTableCell>
             </StyledTableRow>
           ))}
