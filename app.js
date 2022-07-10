@@ -6,6 +6,7 @@ import indexRouter from "./routes/index";
 import dotenv from "dotenv";
 import { config } from "./config";
 import cors from "cors";
+import path from "path";
 
 const result = dotenv.config();
 if (result.error) {
@@ -39,12 +40,10 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({ origin: "*" }));
-
-app.get("/", (req, res) => {
-  res.send("Waves API successfully loaded");
-});
+import uploadRoute from "./routes/upload.routes";
 
 app.use("/api/v1", indexRouter);
+app.use("/uploads", uploadRoute);
 
 const port = config.PORT || "8000";
 
@@ -56,7 +55,7 @@ if (config.NODE_ENV == "production") {
   });
 } else {
   app.get("/", (req, res) => {
-    res.status(200).json({ msg: "Waves API is Working" });
+    res.status(200).json({ message: "Waves API is Working", success: true });
   });
 }
 

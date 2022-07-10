@@ -57,7 +57,7 @@ const useStyles = () => {
   };
 };
 
-const TestLogin = () => {
+const Login = () => {
   const classes = useStyles();
 
   const [cred, setCred] = useState({ email: "", password: "" });
@@ -169,4 +169,4 @@ const TestLogin = () => {
   );
 };
 
-export default TestLogin;
+export default Login;

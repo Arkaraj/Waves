@@ -55,7 +55,7 @@ const useStyles = () => {
   };
 };
 
-const TestLogin = () => {
+const Register = () => {
   const classes = useStyles();
 
   const [user, setUser] = useState({ email: "", username: "", password: "" });
@@ -187,4 +187,4 @@ const TestLogin = () => {
   );
 };
 
-export default TestLogin;
+export default Register;

@@ -5,7 +5,6 @@ export default {
   getImage: async (req, res) => {
     try {
       let fileName = req.params.id;
-      console.log(req.params.id);
       let options = {
         root: path.join(__dirname + "/../uploads/"),
       };

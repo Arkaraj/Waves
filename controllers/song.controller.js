@@ -52,7 +52,11 @@ export default {
       await addSongToArtists(artists, song._id);
       return res
         .status(200)
-        .json({ message: "New Song Registered!", success: true, song });
+        .json({
+          message: "New Song Registered! Refresh Page to Get Changes",
+          success: true,
+          song,
+        });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }

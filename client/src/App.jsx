@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
+import Main from "./Components/Main";
 import Nav from "./Components/Nav";
 import Login from "./Components/Login";
 import PublicRoute from "./Hocs/PublicRoutes";
@@ -19,7 +20,7 @@ function App() {
         <Nav />
         <div className="main">
           <Routes>
-            <Route exact path="/" element={<h1>WAVES</h1>} />
+            <Route exact path="/" element={<Main />} />
             <Route
               path="/login"
               element={

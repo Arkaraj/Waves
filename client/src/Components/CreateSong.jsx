@@ -6,7 +6,6 @@ import MultipleSelectCheckmarks from "./MultipleSelectCheckmarks";
 import { Grid, TextField, Button, Paper, Stack } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Message from "./Message";
-import { useNavigate } from "react-router-dom";
 
 const useStyles = () => {
   const theme = useTheme();
@@ -57,7 +56,7 @@ const CreateSong = () => {
       art.push(artists.find((a) => a.name == n)._id);
     });
   };
-  let navigate = useNavigate();
+
   useEffect(() => {
     ArtistService.getAllArtist().then((data) => {
       if (data.success) {
@@ -77,22 +76,23 @@ const CreateSong = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     addArtist();
-    const data = await SongService.createSong({ ...song, artists: art });
-    if (data.success) {
-      const fd = new FormData();
-      fd.append("image", selectedFile, selectedFile.name);
-      const img = await SongService.addCoverImageToSong(data.song._id, fd);
-      if (img.success) {
-        setMessage(data.message);
-        setStatus("success");
-        navigate("/home");
+    if (song.name != "") {
+      const data = await SongService.createSong({ ...song, artists: art });
+      if (data.success) {
+        const fd = new FormData();
+        fd.append("image", selectedFile, selectedFile.name);
+        const img = await SongService.addCoverImageToSong(data.song._id, fd);
+        if (img.success) {
+          setMessage(data.message);
+          setStatus("success");
+        } else {
+          setMessage(img.message);
+          setStatus("error");
+        }
       } else {
-        setMessage(img.message);
+        setMessage(data.message);
         setStatus("error");
       }
-    } else {
-      setMessage(data.message);
-      setStatus("error");
     }
   };
 

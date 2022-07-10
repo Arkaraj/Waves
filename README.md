@@ -2,12 +2,16 @@
 
 Spotify like Webapp with Simple CRUD operations
 
+Hosted In: https://wavesmusic.herokuapp.com/
+
 ## Tech Stack
 
 - Node JS (Using ES6 with esm)
 - Express JS
 - MongoDB
-- API Testing - Postman (can test with mocha or chai later on...)
+- API Testing - Postman (can test with mocha or chai)
+- React Js (Client Side)
+- Material UI (UI framework)
 
 ## What can it Do?
 
@@ -15,8 +19,6 @@ Spotify like Webapp with Simple CRUD operations
 - Add Artists
 - Add Songs
 - Cover photo of the Song (with multer)
-
-## ER Diagram
 
 ## Postman Collections
 

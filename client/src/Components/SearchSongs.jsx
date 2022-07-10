@@ -24,9 +24,13 @@ const SearchSongs = () => {
       {loaded ? (
         <Grid container spacing={2}>
           {/* <pre>{JSON.stringify(songs, null, 2)}</pre> */}
-          {songs.map((song) => (
-            <SearchSongComponent song={song} key={song._id} />
-          ))}
+          {songs.length > 0 ? (
+            songs.map((song) => (
+              <SearchSongComponent song={song} key={song._id} />
+            ))
+          ) : (
+            <p>No Song Found with that name</p>
+          )}
         </Grid>
       ) : (
         <p className="loading"></p>
