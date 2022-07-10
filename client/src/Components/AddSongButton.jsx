@@ -49,7 +49,7 @@ const AddSongButton = () => {
               Adding a new Song
             </Typography>
             <Button autoFocus color="inherit" onClick={handleClose}>
-              Save
+              Close
             </Button>
           </Toolbar>
         </AppBar>

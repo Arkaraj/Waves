@@ -7,3 +7,13 @@ Spotify like Webapp with Simple CRUD operations
 - React Js
 - React Router Dom
 - Material UI for UI framework
+
+# To Run
+
+```bash
+
+$ npm install
+
+$ npm run build
+
+```

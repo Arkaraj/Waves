@@ -15,12 +15,7 @@ if (result.error) {
 
 const app = express();
 
-const mongoConnectionOptions = {
-  // useNewUrlParser: true,
-  // useUnifiedTopology: true,
-  // useCreateIndex: true,
-  // useFindAndModify: false,
-};
+const mongoConnectionOptions = {};
 
 mongoose
   .connect(config.MONGO_URI, mongoConnectionOptions)
