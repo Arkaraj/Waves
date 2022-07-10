@@ -41,7 +41,8 @@ const Song = (props) => {
                 Release Date: {new Date(song.dateOfRelease).toDateString()}
               </Typography>
               <Typography gutterBottom variant="h6" component="p">
-                Average Rating: {song.avgRating}
+                Average Rating: {song.avgRating} ({song.rating.length} users
+                rated)
               </Typography>
               <p style={{ display: "none" }}>
                 {song.artists.map((ar) => artists.push(ar.name))}

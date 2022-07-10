@@ -3,9 +3,24 @@ import ArtistService from "../Services/ArtistService";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
+import { TextField } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+
+const useStyles = () => {
+  const theme = useTheme();
+  return {
+    form: {
+      width: "100%",
+      marginTop: theme.spacing(1),
+    },
+    submit: {
+      margin: theme.spacing(3, 0, 2),
+    },
+  };
+};
 
 const CreateArtist = ({ open, setOpen, setChange }) => {
+  const classes = useStyles();
   const [artist, setArtist] = useState({ name: "", dob: new Date(), bio: "" });
   const [msg, setMsg] = useState("");
 
@@ -39,24 +54,38 @@ const CreateArtist = ({ open, setOpen, setChange }) => {
     <>
       <DialogContent>
         <form onSubmit={handleSubmit}>
-          Name:
           <TextField
-            type="text"
-            name="name"
-            autoFocus
-            margin="dense"
-            label="Name"
+            variant="outlined"
+            margin="normal"
             fullWidth
-            variant="standard"
-            onChange={handleChange}
+            label="Name"
+            name="name"
+            type="text"
             required
+            onChange={handleChange}
+            autoComplete="Name"
+            margin="dense"
+            autoFocus
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            fullWidth
+            name="dob"
+            label="DOB"
+            type="date"
+            required
+            onChange={handleDateChange}
+            autoComplete="current-dob"
+            defaultValue={"2021-07-07"}
           />
           <br />
-          DOB:
-          <input type="date" name="dob" onChange={handleDateChange} required />
-          <br />
-          Bio:
-          <textarea
+          {/* Bio: */}
+          <TextField
+            fullWidth
+            multiline
+            minRows={4}
+            label="bio"
             name="bio"
             onChange={handleChange}
             cols="30"
@@ -65,13 +94,20 @@ const CreateArtist = ({ open, setOpen, setChange }) => {
             required
           />
           <br />
-          <button type="submit">Submit</button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            sx={classes.submit}
+          >
+            Create
+          </Button>
         </form>
         {msg ? <pre>{JSON.stringify(msg, null, 2)}</pre> : null}
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Save</Button>
       </DialogActions>
     </>
   );

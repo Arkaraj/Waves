@@ -122,7 +122,7 @@ const TestLogin = () => {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form sx={classes.form} noValidate onSubmit={handleSubmit}>
+          <form sx={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"

@@ -10,15 +10,24 @@ const Ratings = ({ score, id, newRating }) => {
   const [msg, setMsg] = useState("Successfully Rated!");
 
   const handleSubmit = () => {
-    // SongService.rateSong(
-    //   { rating: value, new: newRating },
-    //   id
-    // ).then((data) => {});
     if (value == 0) {
       setStatus("error");
       setMsg("Enter a Value for Rating!");
+      setOpen(true);
+    } else {
+      SongService.rateSong({ rating: value, new: newRating }, id).then(
+        (data) => {
+          if (data.success) {
+            setStatus("success");
+            setMsg(data.message);
+            setOpen(true);
+          } else {
+            setStatus("error");
+            setMsg(data.message);
+          }
+        }
+      );
     }
-    setOpen(true);
   };
 
   const handleClose = (event, reason) => {

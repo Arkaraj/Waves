@@ -1,4 +1,5 @@
-import * as React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../Context/AuthContext";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -30,6 +31,15 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function SongList({ songs }) {
+  const { user } = useContext(AuthContext);
+  let val = [{ name: "", score: 0 }];
+  const checkUser = (rt) => {
+    return rt.user == user._id;
+  };
+  const storeScore = (song) => {
+    val = song.rating.filter(checkUser);
+    return val.length != 0;
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
@@ -74,9 +84,9 @@ export default function SongList({ songs }) {
               </StyledTableCell>
               <StyledTableCell align="right">
                 <Ratings
-                  score={song.rating.length}
+                  score={storeScore(song) ? val[0].score : 0}
                   id={song._id}
-                  newRating={true}
+                  newRating={val.length == 0}
                 />
               </StyledTableCell>
             </StyledTableRow>

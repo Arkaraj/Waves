@@ -49,7 +49,9 @@ const Artist = () => {
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           Average Rating
         </Typography>
-        <Typography variant="body2">{artist.avgRating}</Typography>
+        <Typography variant="body2">
+          {parseFloat(artist.avgRating).toFixed(2)}
+        </Typography>
         <br />
         <p>Songs:</p>
         <p style={{ display: "none" }}>

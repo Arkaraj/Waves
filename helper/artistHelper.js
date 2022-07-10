@@ -30,15 +30,16 @@ export const addRatingToArtist = async (
     let artist = await Artist.findById(art);
     if (old) {
       let avg = artist.avgRating,
-        n = artist.songs.length,
+        n = artist.songsRated,
         tot = avg * n;
       tot += rating;
       let avgRating = tot / (n + 1);
       artist.avgRating = avgRating;
+      artist.songsRated += 1;
       await artist.save();
     } else {
       let avg = artist.avgRating,
-        n = artist.songs.length,
+        n = artist.songsRated,
         tot = avg * n;
       tot = tot - oldScore + rating;
       let avgRating = tot / n;

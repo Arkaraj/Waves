@@ -122,15 +122,15 @@ const TestLogin = () => {
           <Typography component="h1" variant="h5">
             Sign Up
           </Typography>
-          <form sx={classes.form} noValidate onSubmit={handleSubmit}>
+          <form sx={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               label="Name"
               name="username"
               type="text"
+              required
               onChange={onChangeCred}
               autoComplete="Name"
               autoFocus
@@ -138,11 +138,11 @@ const TestLogin = () => {
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               label="Email Address"
               name="email"
               type="email"
+              required
               onChange={onChangeCred}
               autoComplete="email"
               autoFocus
@@ -150,11 +150,11 @@ const TestLogin = () => {
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
               type="password"
+              required
               onChange={onChangeCred}
               autoComplete="current-password"
             />

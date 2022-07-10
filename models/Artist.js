@@ -27,6 +27,10 @@ const ArtistSchema = new Schema({
     max: 5,
     min: 0,
   },
+  songsRated: {
+    type: Number,
+    default: 0,
+  },
 });
 
 export default model("Artist", ArtistSchema);

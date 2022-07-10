@@ -113,27 +113,27 @@ const TestLogin = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form sx={classes.form} noValidate onSubmit={handleSubmit}>
+          <form sx={classes.form} onSubmit={handleSubmit}>
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               label="Email Address"
               name="email"
               onChange={onChangeCred}
               autoComplete="email"
               type="email"
+              required
               autoFocus
             />
             <TextField
               variant="outlined"
               margin="normal"
-              required
               fullWidth
               name="password"
               label="Password"
               type="password"
+              required
               onChange={onChangeCred}
               autoComplete="current-password"
             />
