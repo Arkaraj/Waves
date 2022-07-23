@@ -2,8 +2,9 @@ import { customErrorHandler } from "../helper/ErrorHandler";
 // Models
 import Song from "../models/Songs";
 import { addRatingToArtist, addSongToArtists } from "../helper/artistHelper";
-import { deleteCoverImage, uploadCoverImage } from "../helper/songHelper";
+// import { deleteCoverImage, uploadCoverImage } from "../helper/songHelper";
 import { config } from "../config";
+import cloudinary from "cloudinary";
 
 const ITEMS_PER_PAGE = parseInt(config.ITEMS_PER_PAGE);
 
@@ -50,13 +51,11 @@ export default {
       let song = new Song({ name, dateOfRelease, artists });
       await song.save();
       await addSongToArtists(artists, song._id);
-      return res
-        .status(200)
-        .json({
-          message: "New Song Registered! Refresh Page to Get Changes",
-          success: true,
-          song,
-        });
+      return res.status(200).json({
+        message: "New Song Registered! Refresh Page to Get Changes",
+        success: true,
+        song,
+      });
     } catch (err) {
       return customErrorHandler(res, undefined, undefined, err);
     }
@@ -65,11 +64,12 @@ export default {
     try {
       if (req.file) {
         let id = req.params.id;
-        let image = "";
-        image = await uploadCoverImage(req, id);
-        let song = await Song.findById(id);
-        song.coverImage = image;
-        await song.save();
+        const res = await cloudinary.v2.uploader.upload(req.file.path, {
+          public_id: `${id}`,
+        });
+        let song = await Song.findByIdAndUpdate(id, {
+          $set: { coverImage: res.url },
+        });
         return res.status(200).json({
           message: "Uploaded Cover Successfully!",
           success: true,
@@ -92,8 +92,11 @@ export default {
 
       if (song) {
         await song.remove();
-        await deleteCoverImage(song.coverImage);
-        res.status(200).json({ success: true });
+        await cloudinary.v2.uploader.destroy(id);
+        // await deleteCoverImage(song.coverImage);
+        res
+          .status(200)
+          .json({ success: true, message: "Delete Song Successfully" });
       } else {
         return customErrorHandler(res, 404, "No Such Song");
       }

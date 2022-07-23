@@ -7,6 +7,7 @@ import dotenv from "dotenv";
 import { config } from "./config";
 import cors from "cors";
 import path from "path";
+import { v2 } from "cloudinary";
 
 const result = dotenv.config();
 if (result.error) {
@@ -35,6 +36,14 @@ app.use(express.json({ limit: "5mb" }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors({ origin: "*" }));
+
+v2.config({
+  cloud_name: config.CLOUDNINARY_CLOUD_NAME,
+  api_key: config.CLOUDNINARY_API_KEY,
+  api_secret: config.CLOUDNINARY_API_SECRET,
+  secure: true,
+});
+
 import uploadRoute from "./routes/upload.routes";
 
 app.use("/api/v1", indexRouter);
