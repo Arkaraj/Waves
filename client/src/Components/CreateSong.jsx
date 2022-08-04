@@ -141,13 +141,17 @@ const CreateSong = () => {
               defaultValue={"2021-07-07"}
             />
             ArtWork:
-            <input
-              type="file"
-              name="image"
-              onChange={changeHandler}
-              accept="image/png, image/gif, image/jpeg"
-              required
-            />
+            <Button variant="contained" component="label">
+              Upload
+              <input
+                type="file"
+                name="image"
+                onChange={changeHandler}
+                accept="image/png, image/gif, image/jpeg"
+                hidden
+                required
+              />
+            </Button>
             {isFilePicked ? (
               <div>
                 <p>Filename: {selectedFile.name}</p>
